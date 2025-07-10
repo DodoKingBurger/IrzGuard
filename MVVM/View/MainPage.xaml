@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IrzGuard.MainPage">
+  <ScrollView>
+    <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+      <Image
+                Source="irz.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="ИРЗ эмблема." />
+      <Label
+                Text = "Узнайте код доступа через IrzGuardPro:"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="35" />
+      <Entry 
+               x:Name="EntryBox_code" Keyboard="Numeric"
+               TextChanged="EntryBox_code_TextChanged"
+               Placeholder="Введите код доступа" FontFamily="Helvetica" 
+               FontSize="28" MaxLength="3"/>
+      <Button
+                x:Name="CheckCodePass"
+                Text="Проверить" 
+                SemanticProperties.Hint="go to Mainpage "
+                Clicked="CheckingCodePass"
+                HorizontalOptions="Fill" />
+    </VerticalStackLayout>
+  </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel ="clr-namespace:IrzGuard.MVVM.ViewModel"
+             x:Class="IrzGuard.MVVM.View.CodePage"
+             Title="CodePage">
+  <ContentPage.BindingContext>
+    <viewmodel:MainViewModel/>
+  </ContentPage.BindingContext>
+  <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+    <Image
+                Source="irz.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="ИРЗ эмблема" />
+    <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
+              SemanticProperties.Description= "Уровень доступа для генерации кода доступа."
+              SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged">
+    </Picker>
+    <Label
+                x:Name="LabelCodePassFuture"
+                Text = "{Binding Label_str_Future}"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="28"
+                SemanticProperties.Description="Код доступа для будуйщего часа." />
+    <Label
+                x:Name="LabelCodePass"
+                Text="{Binding Label_str_Now}"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                FontSize="35"
+                TextColor="Green"
+                SemanticProperties.Description="Код доступа на текущий момент." />
+    <Label
+                x:Name="LabelCodePassPast"
+                Text= "{Binding Label_str_Past}"
+                FontSize="28"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Код доступа для прошлого часа." />
+  </VerticalStackLayout>
+</ContentPage>
