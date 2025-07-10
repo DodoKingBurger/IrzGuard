@@ -8,6 +8,11 @@ public partial class CodePage : ContentPage
 
 	}
 
+	private void ReloadLevelAccess(object sender, EventArgs e) 
+	{
+
+	}
+
 
   public CodePage()
 	{

@@ -41,5 +41,11 @@
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Код доступа для прошлого часа." />
+    <Button
+                x:Name="CheckCodePass"
+                Text="Изменить уровень доступа" 
+                SemanticProperties.Hint="go to Mainpage "
+                Clicked="ReloadLevelAccess"
+                HorizontalOptions="Fill" />
   </VerticalStackLayout>
 </ContentPage>
