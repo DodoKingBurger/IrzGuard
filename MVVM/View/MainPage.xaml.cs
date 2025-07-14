@@ -1,22 +1,107 @@
-﻿namespace IrzGuard
+﻿using IrzGuard.MVVM.View;
+using IrzGuard.Utility;
+using System.Net.NetworkInformation;
+
+namespace IrzGuard
 {
   public partial class MainPage : ContentPage
   {
 
-
     private void EntryBox_code_TextChanged(object sender, EventArgs e) 
     {
-
+      EntryBox_code.TextColor = Colors.Black;
     }
 
-    private void CheckingCodePass(object sender, EventArgs e) 
+    /// <summary>
+    /// Событие по нажатию на кнопку.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void CheckingCodePass(object sender, EventArgs e) 
     {
-
+      try
+      {
+        if (int.TryParse(EntryBox_code.Text, out var result))
+        {
+          if (Guard.CheckReferencePass(DateTime.Now, result, out int LevelAccess))
+          {
+            Hash_table.SetInt("SelectedLVL.config", LevelAccess);
+            SecurityDevice.SetKey(GetCodeDevice());
+            Hash_table.SetInt("LevelAccess.config", LevelAccess);
+            await Navigation.PushAsync(new CodePage());
+          }
+          else
+          {
+            EntryBox_code.TextColor = Colors.Red;
+          }
+        }
+        else
+        {
+          EntryBox_code.TextColor = Colors.Red;
+          DisplayAlert("Ошибка", "Не удалось преобразовать введенный код в цифры","Okey");
+        }
+      }
+      catch (Exception ex)
+      {
+        DisplayAlert("Ошибка", ex.Message, "OK");
+      }
     }
+
+    /// <summary>
+    /// Получения кода устройства взависимости от платформы.
+    /// </summary>
+    /// <returns>Код устройства.</returns>
+    static public string GetCodeDevice()
+    {        
+      string deviceID = "0000 0000 0000 0000";
+#if ANDROID
+        deviceID = Android.Provider.Settings.Secure.GetString(Platform.CurrentActivity.ContentResolver, Android.Provider.Settings.Secure.AndroidId);
+#elif IOS
+        deviceID = UIKit.UIDevice.CurrentDevice.IdentifierForVendor.ToString();
+#elif WINDOWS
+        deviceID = NetworkInterface.GetAllNetworkInterfaces()
+                                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                                .Select(nic => nic.GetPhysicalAddress().ToString())
+                                .FirstOrDefault();
+#endif
+      return deviceID;
+    }
+
+    /// <summary>
+    /// Проверка верификационного файла.
+    /// </summary>
+    /// <returns>True, если файл был найден и его содержимое совпадает с ключом.</returns>
+    public bool ExistsVerificationFile()
+    {
+      try
+      {
+        if (SecurityDevice.EqualsKey(GetCodeDevice()))
+          return true;
+        else
+          return false;
+      }
+      catch (Exception ex)
+      {
+        return false;
+      }
+    }
+
+    /// <summary>
+    /// Загрузка страницы.
+    /// </summary>
+    async void LoadPage()
+    {
+      if (ExistsVerificationFile())
+      {
+        await Navigation.PushAsync(new CodePage()); 
+      } 
+    }
+
 
     public MainPage()
     {
       InitializeComponent();
+      LoadPage();
     }
   }
 
