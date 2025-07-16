@@ -1,5 +1,6 @@
 ﻿using IrzGuard.MVVM.View;
 using IrzGuard.Utility;
+using Microsoft.Maui.Controls;
 using System.Net.NetworkInformation;
 
 namespace IrzGuard
@@ -28,7 +29,7 @@ namespace IrzGuard
             Hash_table.SetInt("SelectedLVL.config", LevelAccess);
             SecurityDevice.SetKey(DeviceSystem.GetCodeDevice());
             Hash_table.SetInt("LevelAccess.config", LevelAccess);
-            await Navigation.PushAsync(new CodePage());
+            await Navigation.PushAsync(new CodePage(), true);
           }
           else
           {
@@ -93,6 +94,9 @@ namespace IrzGuard
     {
       if (ExistsVerificationFile())
       {
+        Button backButton = new Button { Text = "Назад", HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Center };
+        backButton.Clicked += async (o, e) => await Navigation.PushAsync(new CodePage(),true);
+        ViewContainer.Children.Add(backButton);
         await Navigation.PushAsync(new CodePage()); 
       } 
     }
@@ -100,6 +104,7 @@ namespace IrzGuard
 
     public MainPage()
     {
+
       InitializeComponent();
       LoadPage();
     }

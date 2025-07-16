@@ -27,6 +27,11 @@
                 SemanticProperties.Hint="go to Mainpage "
                 Clicked="CheckingCodePass"
                 HorizontalOptions="Fill" />
+      <VerticalStackLayout 
+        x:Name="ViewContainer"            
+            Padding="30,0"
+            Spacing="25"
+        HorizontalOptions="Fill" />
     </VerticalStackLayout>
   </ScrollView>
 
