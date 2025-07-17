@@ -8,9 +8,15 @@ namespace IrzGuard
   public partial class MainPage : ContentPage
   {
 
+    /// <summary>
+    /// Событие на ввод текста в текстовое поле. Изменить цвет текста после ввода неправильного пароля.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void EntryBox_code_TextChanged(object sender, EventArgs e) 
     {
-      EntryBox_code.TextColor = Colors.Black;
+      if (sender is Entry entry && entry.TextColor!= Colors.Black)
+        entry.TextColor = Colors.Black;
     }
 
     /// <summary>
@@ -29,7 +35,7 @@ namespace IrzGuard
             Hash_table.SetInt("SelectedLVL.config", LevelAccess);
             SecurityDevice.SetKey(DeviceSystem.GetCodeDevice());
             Hash_table.SetInt("LevelAccess.config", LevelAccess);
-            Button backButton = new Button { Text = "Назад", HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Center };
+            Button backButton = new() { Text = "Назад", HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Center };
             backButton.Clicked += async (o, e) => await Navigation.PushAsync(new CodePage(), true);
             ViewContainer.Children.Add(backButton);
             await Navigation.PushAsync(new CodePage(), true);
@@ -66,6 +72,7 @@ namespace IrzGuard
       }
       catch (Exception ex)
       {
+        DisplayAlert("Ошибка", ex.Message, "OK");
         return false;
       }
     }
@@ -77,17 +84,15 @@ namespace IrzGuard
     {
       if (ExistsVerificationFile())
       {
-        Button backButton = new Button { Text = "Назад", HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Center };
+        Button backButton = new() { Text = "Назад", HorizontalOptions = LayoutOptions.Fill, VerticalOptions = LayoutOptions.Center };
         backButton.Clicked += async (o, e) => await Navigation.PushAsync(new CodePage(),true);
         ViewContainer.Children.Add(backButton);
         await Navigation.PushAsync(new CodePage()); 
       } 
     }
 
-
     public MainPage()
     {
-
       InitializeComponent();
       LoadPage();
     }

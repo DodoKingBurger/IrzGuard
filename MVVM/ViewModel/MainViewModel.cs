@@ -49,8 +49,7 @@ namespace IrzGuard.MVVM.ViewModel
     /// <returns>Список от уровня доступа.</returns>
     public void GetLvlAccess()
     {
-      //var list = new List<string>();
-      this.ListLevelAccess = new List<string>();
+      this.ListLevelAccess = [];
       int count = Hash_table.GetInt("LevelAccess.config");
       foreach (EnumLvlAccess item in Enum.GetValues(typeof(EnumLvlAccess)))
       {
@@ -67,6 +66,7 @@ namespace IrzGuard.MVVM.ViewModel
 
     public MainViewModel()
     {
+      this.ListLevelAccess = [];
       this.Now_date = new MainViewModel_Now();
       this.Future_data = new MainViewModel_Modified();
       this.Past_data = new MainViewModel_Modified();

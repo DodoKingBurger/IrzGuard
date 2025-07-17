@@ -10,12 +10,12 @@ public partial class CodePage : ContentPage
   /// <summary>
   /// Таймер.
   /// </summary>
-  IDispatcherTimer timer_minute = Application.Current.Dispatcher.CreateTimer();
+  private IDispatcherTimer timer_minute = Application.Current.Dispatcher.CreateTimer();
 
   /// <summary>
   /// ViewModel ну тип косячный, но вариант Модель он не видит значит работает ))))
   /// </summary>
-  public MainViewModel labelViewModel = new MainViewModel();
+  public MainViewModel labelViewModel = new();
 
   /// <summary>
   /// Уровень доступа сейчас.
@@ -33,8 +33,8 @@ public partial class CodePage : ContentPage
   /// <param name="e"></param>
   private void ComboBox_AccessLevel_SelectedIndexChanged(object sender, EventArgs e) 
 	{
-    if (sender is Picker)
-      Hash_table.SetInt("SelectedLVL.config", ((Picker)sender).SelectedIndex);
+    if (sender is Picker picker)
+      Hash_table.SetInt("SelectedLVL.config", picker.SelectedIndex);
   }
 
 	/// <summary>

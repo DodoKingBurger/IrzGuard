@@ -14,7 +14,7 @@ namespace IrzGuard.Utility
     /// <summary>
     /// Дирректория в которой расположен .exe.
     /// </summary>
-    private static string mainDir = FileSystem.Current.AppDataDirectory;
+    private static readonly string mainDir = FileSystem.Current.AppDataDirectory;
 
     /// <summary>
     /// Возвращает строку по названию файла.
@@ -31,7 +31,7 @@ namespace IrzGuard.Utility
           return "---";
         using (FileStream fs = File.OpenRead(Path.Combine(mainDir, key)))
         {
-          StreamReader reader = new StreamReader(fs);
+          StreamReader reader = new(fs);
           contents = reader.ReadToEnd().Trim();
 
         }
@@ -44,7 +44,7 @@ namespace IrzGuard.Utility
     }
 
     /// <summary>
-    /// 
+    /// Перезаписывает файл с названием key, и записывает туда данные из параметра value.
     /// </summary>
     /// <param name="key">Имя файла.</param>
     /// <param name="value">Значения передаваймая в файл.</param>
@@ -54,7 +54,7 @@ namespace IrzGuard.Utility
     {
       if (!string.IsNullOrEmpty(key))
       {
-        using (StreamWriter writer = new StreamWriter(Path.Combine(mainDir, key), false))
+        using (StreamWriter writer = new(Path.Combine(mainDir, key), false))
         {
           await writer.WriteLineAsync(value);
         }
@@ -64,7 +64,7 @@ namespace IrzGuard.Utility
     }
 
     /// <summary>
-    /// 
+    /// Возвращает из файла key число, если конвертировать не получается вернет -1.
     /// </summary>
     /// <param name="key">Имя файла.</param>
     /// <returns>Число внутри файла.</returns>
@@ -76,7 +76,7 @@ namespace IrzGuard.Utility
         int value = -1;
         if (!File.Exists(Path.Combine(mainDir, key)))
           return value;
-        using (StreamReader reader = new StreamReader(Path.Combine(mainDir, key)))
+        using (StreamReader reader = new(Path.Combine(mainDir, key)))
         {
           string content = reader.ReadToEnd();
           int.TryParse(content.Trim(), out value);
@@ -88,16 +88,16 @@ namespace IrzGuard.Utility
     }
 
     /// <summary>
-    /// 
+    /// Перезаписывает файл с названием key, и записывает туда данные из параметра value.
     /// </summary>
     /// <param name="key">Имя файла.</param>
     /// <param name="value">Значения передаваймая в файл.</param>
     /// <exception cref="ArgumentException">value или key null</exception>
-    public static async Task SetInt(string key, int value)
+    public static async void SetInt(string key, int value)
     {
       if (!string.IsNullOrEmpty(key))
       {
-        using (StreamWriter writer = new StreamWriter(Path.Combine(mainDir, key), false))
+        using (StreamWriter writer = new(Path.Combine(mainDir, key), false))
         {
           await writer.WriteLineAsync($"{value}");
         }

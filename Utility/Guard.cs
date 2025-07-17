@@ -49,7 +49,7 @@ namespace IrzGuard.Utility
     /// <returns> Трехзначный пароль если есть такой уровень доступа, иначе 0.</returns>
     public static int GeneratePass(int LevelAccess, DateTime dateTime)
     {
-      if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == null)
+      if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == DateTime.UnixEpoch)
         return 000;
 
       int Base = (dateTime.Date.Year % 100 * dateTime.Date.Month * dateTime.Day * dateTime.Hour) % 1000;
@@ -118,7 +118,7 @@ namespace IrzGuard.Utility
     /// <returns> Трехзначный код если есть такой уровень доступа, иначе 0.</returns>
     public static int GenerateReferenceCode(int LevelAccess, DateTime dateTime)
     {
-      if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == null)
+      if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == DateTime.UnixEpoch)
         return 000;
 
       int Base = ((dateTime.Date.Year % 100) * dateTime.Date.Month * dateTime.Day * dateTime.Hour * (dateTime.Minute / 10)) % 1000;
