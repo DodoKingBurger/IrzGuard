@@ -17,7 +17,8 @@
                 SemanticProperties.Description="ИРЗ эмблема" />
     <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
               SemanticProperties.Description= "Уровень доступа для генерации кода доступа."
-              SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged">
+              SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged"
+            ItemsSource="{Binding ListLevelAccess}">
     </Picker>
     <Label
                 x:Name="LabelCodePassFuture"

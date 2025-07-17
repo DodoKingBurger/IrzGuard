@@ -134,11 +134,5 @@ namespace IrzGuard.Utility
 
 
     #endregion
-
-    #region Конструкторы
-
-    //public Guard() { }
-
-    #endregion
   }
 }

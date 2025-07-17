@@ -17,25 +17,66 @@ namespace IrzGuard.MVVM.ViewModel
   /// </summary>
   public class MainViewModel
   {
+    #region Поля и свойства
 
     /// <summary>
     /// Уровни доступа.
     /// </summary>
-    public List<string> ListLevelAccess = ["Электромонтер", "Мастер", "Администратор"];
+    public List<string> ListLevelAccess;//= ["Электромонтер", "Мастер", "Администратор"];
 
+    /// <summary>
+    /// ViewModel с данными на данный момент.
+    /// </summary>
     public MainViewModel_Now Now_date { get; set; }
 
+    /// <summary>
+    /// ViewModel с данными на момент +1 час от текущего времени.
+    /// </summary>
     public MainViewModel_Modified Future_data { get; set; }
 
+    /// <summary>
+    /// ViewModel с данными на момент -1 час от текущего времени.
+    /// </summary>
     public MainViewModel_Modified Past_data { get; set; }
+
+    #endregion
+
+    #region Функции
+
+    /// <summary>
+    /// Выдает список взависимости от уровня доступа.
+    /// </summary>
+    /// <returns>Список от уровня доступа.</returns>
+    public void GetLvlAccess()
+    {
+      //var list = new List<string>();
+      this.ListLevelAccess = new List<string>();
+      int count = Hash_table.GetInt("LevelAccess.config");
+      foreach (EnumLvlAccess item in Enum.GetValues(typeof(EnumLvlAccess)))
+      {
+        if ((int)item <= count)
+          this.ListLevelAccess.Add(item.ToString());
+        else
+          break;
+      }
+    }
+
+    #endregion
+
+    #region Конструкторы
 
     public MainViewModel()
     {
       this.Now_date = new MainViewModel_Now();
       this.Future_data = new MainViewModel_Modified();
       this.Past_data = new MainViewModel_Modified();
+      GetLvlAccess();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="list">Список уровней доступа.</param>
     public MainViewModel(List<string> list)
     {
       this.ListLevelAccess = list;
@@ -43,6 +84,8 @@ namespace IrzGuard.MVVM.ViewModel
       this.Future_data = new MainViewModel_Modified();
       this.Past_data = new MainViewModel_Modified();
     }
+
+    #endregion
 
     #region NOT USED
 
