@@ -27,13 +27,16 @@ namespace IrzGuard.Utility
       if (!string.IsNullOrEmpty(key))
       {
         string contents = string.Empty;
-        using (FileStream fs = new FileStream(Path.Combine(mainDir, key), FileMode.OpenOrCreate))
+        if (!File.Exists(Path.Combine(mainDir, key)))
+          return "---";
+        using (FileStream fs = File.OpenRead(Path.Combine(mainDir, key)))
         {
           StreamReader reader = new StreamReader(fs);
           contents = reader.ReadToEnd().Trim();
-          if (string.IsNullOrEmpty(contents))
-            contents = "---";
+
         }
+        if (string.IsNullOrEmpty(contents))
+          contents = "---";
         return contents;
       }
       else
@@ -47,14 +50,13 @@ namespace IrzGuard.Utility
     /// <param name="value">Значения передаваймая в файл.</param>
     /// <exception cref="ArgumentException">value или key null</exception>
     /// <exception cref="FileLoadException">Файл не получилось перезаписать.</exception>
-    public static void SetString(string key, string value)
+    public static async void SetString(string key, string value)
     {
       if (!string.IsNullOrEmpty(key))
       {
-        using (FileStream fs = new FileStream(Path.Combine(mainDir, key), FileMode.Create))
+        using (StreamWriter writer = new StreamWriter(Path.Combine(mainDir, key), false))
         {
-          StreamWriter writer = new StreamWriter(fs);
-          writer.WriteLine(value);
+          await writer.WriteLineAsync(value);
         }
       }
       else
@@ -72,10 +74,12 @@ namespace IrzGuard.Utility
       if (!string.IsNullOrEmpty(key))
       {
         int value = -1;
-        using (FileStream fs = new FileStream(Path.Combine(mainDir, key), FileMode.OpenOrCreate))
+        if (!File.Exists(Path.Combine(mainDir, key)))
+          return value;
+        using (StreamReader reader = new StreamReader(Path.Combine(mainDir, key)))
         {
-          StreamReader reader = new StreamReader(fs);
-          int.TryParse(reader.ReadToEnd().Trim(), out value);
+          string content = reader.ReadToEnd();
+          int.TryParse(content.Trim(), out value);
         }
         return value;
       }
@@ -89,14 +93,13 @@ namespace IrzGuard.Utility
     /// <param name="key">Имя файла.</param>
     /// <param name="value">Значения передаваймая в файл.</param>
     /// <exception cref="ArgumentException">value или key null</exception>
-    public static void SetInt(string key, int value)
+    public static async Task SetInt(string key, int value)
     {
       if (!string.IsNullOrEmpty(key))
       {
-        using (FileStream fs = new FileStream(Path.Combine(mainDir, key), FileMode.Create))
+        using (StreamWriter writer = new StreamWriter(Path.Combine(mainDir, key), false))
         {
-          StreamWriter writer = new StreamWriter(fs);
-          writer.WriteLine(value);
+          await writer.WriteLineAsync($"{value}");
         }
       }
       else

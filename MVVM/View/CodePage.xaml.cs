@@ -93,18 +93,11 @@ public partial class CodePage : ContentPage
       }
 
       int save_LevelAccess = Hash_table.GetInt("SelectedLVL.config");
-      
       DateTime dateTime = DateTime.Now;
-      DateTime dateTime_Past = dateTime.AddHours(-1);
-      DateTime dateTime_Future = dateTime.AddHours(1);
 
-      labelViewModel.DateTime_Create_Now = dateTime;
-      labelViewModel.DateTime_Create_Past = dateTime_Past;
-      labelViewModel.DateTime_Create_Future = dateTime_Future;
-
-      labelViewModel.Password_Future = Guard.GeneratePass(save_LevelAccess, dateTime_Future);
-      labelViewModel.Password_Now = Guard.GeneratePass(save_LevelAccess, dateTime);
-      labelViewModel.Password_Past = Guard.GeneratePass(save_LevelAccess, dateTime_Past);
+      labelViewModel.Now_date.DateTime_Create = dateTime;
+      labelViewModel.Past_data.DateTime_Create = dateTime.AddHours(-1);
+      labelViewModel.Future_data.DateTime_Create = dateTime.AddHours(1);
     }
     catch (Exception ex)
     {

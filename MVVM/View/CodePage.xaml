@@ -21,14 +21,14 @@
     </Picker>
     <Label
                 x:Name="LabelCodePassFuture"
-                Text = "{Binding Label_str_Future}"
+                Text = "{Binding Future_data.Label_str}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="28"
                 SemanticProperties.Description="Код доступа для будуйщего часа." />
     <Label
                 x:Name="LabelCodePass"
-                Text="{Binding Label_str_Now}"
+                Text="{Binding Now_date.Label_str}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="35"
@@ -36,7 +36,7 @@
                 SemanticProperties.Description="Код доступа на текущий момент." />
     <Label
                 x:Name="LabelCodePassPast"
-                Text= "{Binding Label_str_Past}"
+                Text= "{Binding Past_data.Label_str}"
                 FontSize="28"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
