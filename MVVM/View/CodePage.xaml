@@ -20,19 +20,19 @@
                 HeightRequest="185"
                 Aspect="AspectFit"
                 SemanticProperties.Description="ИРЗ эмблема" />
-    <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
-              SemanticProperties.Description= "Уровень доступа для генерации кода доступа."
-              SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged"
-            ItemsSource="{Binding ListLevelAccess}">
-    </Picker>
-    <Label
+      <Picker x:Name="ComboBox_AccessLevel" Title="Уровень доступа" FontSize="28" 
+                SemanticProperties.Description= "Уровень доступа для генерации кода доступа."
+                SelectedIndexChanged="ComboBox_AccessLevel_SelectedIndexChanged"
+                ItemsSource="{Binding ListLevelAccess}">
+      </Picker>
+      <Label
                 x:Name="LabelCodePassFuture"
                 Text = "{Binding Future_data.Label_str}"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 FontSize="28"
                 SemanticProperties.Description="Код доступа для будуйщего часа." />
-    <Label
+      <Label
                 x:Name="LabelCodePass"
                 Text="{Binding Now_date.Label_str}"
                 Style="{StaticResource SubHeadline}"
@@ -40,21 +40,22 @@
                 FontSize="35"
                 TextColor="Green"
                 SemanticProperties.Description="Код доступа на текущий момент." />
-    <Label
+      <Label
                 x:Name="LabelCodePassPast"
                 Text= "{Binding Past_data.Label_str}"
                 FontSize="28"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Код доступа для прошлого часа." />
-    <Button
+      <Button
                 x:Name="CheckCodePass"
                 Text="Изменить уровень доступа" 
                 SemanticProperties.Hint="go to Mainpage "
                 Clicked="ReloadLevelAccess"
-                HorizontalOptions="Fill" />
+                HorizontalOptions="Fill" />  
+
   </VerticalStackLayout>
-  <Label 
+      <Label 
                 Text="{Binding Now_date.Version}"
                 x:Name="Label_info"
                 Grid.Column="0"

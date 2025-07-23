@@ -32,8 +32,8 @@ namespace IrzGuard.MVVM.ViewModel
         {
           this.resources.DateTimeCreated = value;
           int save_LevelAccess = Hash_table.GetInt("SelectedLVL.config");
-          Password = Guard.GeneratePass(save_LevelAccess, value);
-          Label_str = $"{value.ToString()}";
+          this.Password = Guard.GeneratePass(save_LevelAccess, value);
+          this.Label_str = $"{value.ToString()}";
         }
       }
     }
@@ -49,7 +49,7 @@ namespace IrzGuard.MVVM.ViewModel
         if (int.IsPositive(value) && !this.resources.Code.Equals(value))
         {
           this.resources.Code = value;
-          Label_str = $"{value}";
+          this.Label_str = $"{value}";
         }
       }
     }
@@ -98,7 +98,7 @@ namespace IrzGuard.MVVM.ViewModel
     /// <param name="prop"></param>
     public void OnPropertyChanged([CallerMemberName] string prop = "")
     {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
     #endregion

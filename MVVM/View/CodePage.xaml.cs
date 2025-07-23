@@ -54,9 +54,9 @@ public partial class CodePage : ContentPage
   {
     BindingContext = labelViewModel;
     ComboBox_AccessLevel.SelectedIndex = Hash_table.GetInt("SelectedLVL.config");
-    timer_minute.Interval = TimeSpan.FromSeconds(1);
-    timer_minute.Tick += (s, e) => ViewCodePass();
-    timer_minute.Start();
+    this.timer_minute.Interval = TimeSpan.FromSeconds(1);
+    this.timer_minute.Tick += (s, e) => ViewCodePass();
+    this.timer_minute.Start();
   }
 
   /// <summary>
@@ -82,7 +82,7 @@ public partial class CodePage : ContentPage
     catch (Exception ex)
     {
       if (!DisplayAlert("Ошибка", $"{ex.Message}\n Продолжить ?", "Yes", "No").Result)
-        timer_minute.Stop();
+        this.timer_minute.Stop();
     }
   }
 
