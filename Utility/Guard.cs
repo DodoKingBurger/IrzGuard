@@ -60,8 +60,15 @@ namespace IrzGuard.Utility
       int ditgit2 = (Base / 10 % 10 + LevelAccess) % 10;
       int ditgit3 = (Base % 10 + LevelAccess) % 10;
 
+      int Key_XOR = (ditgit1 * 100 + ditgit2 * 10 + ditgit3 ^ Key) % 1000;
+
+      if (Key_XOR < 100)
+        Key_XOR += 100;
+      if (Key_XOR == Pass)
+        Key_XOR++;
+
       //XOR с ключом.
-      Pass = (ditgit1 * 100 + ditgit2 * 10 + ditgit3 ^ Key) % 1000;
+      Pass = Key_XOR;
 
       return Pass;
     }
