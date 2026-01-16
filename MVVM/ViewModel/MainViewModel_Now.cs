@@ -75,19 +75,11 @@ namespace IrzGuard.MVVM.ViewModel
       }
     }
 
-    private string str_Version = string.Empty;
+		private string str_Version = $"ИРЗ ТЕК: {Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
 
-    public string Version
+		public string Version
     {
       get => this.str_Version;
-      set
-      {
-        if (!string.IsNullOrEmpty(value) && !label_str.Equals(value))
-        {
-          this.str_Version = $"ООО ИРЗ ТЕК: {value}";
-          OnPropertyChanged();
-        }
-      }
     }
 
     #region Методы
@@ -105,7 +97,7 @@ namespace IrzGuard.MVVM.ViewModel
 
     public MainViewModel_Now()
     {
-      this.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
     }
   }
 }

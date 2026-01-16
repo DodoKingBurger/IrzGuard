@@ -1,44 +1,59 @@
-using IrzGuard.MVVM.ViewModel;
+п»їusing IrzGuard.MVVM.ViewModel;
 using IrzGuard.Utility;
 
 namespace IrzGuard.MVVM.View;
 
 public partial class CodePage : ContentPage
 {
-  #region Поля и свойства
+  #region РџРѕР»СЏ Рё СЃРІРѕР№СЃС‚РІР°
 
   /// <summary>
-  /// Таймер.
+  /// РўР°Р№РјРµСЂ.
   /// </summary>
   private IDispatcherTimer timer_minute = Application.Current.Dispatcher.CreateTimer();
 
   /// <summary>
-  /// ViewModel ну тип косячный, но вариант Модель он не видит значит работает ))))
+  /// ViewModel РЅСѓ С‚РёРї РєРѕСЃСЏС‡РЅС‹Р№, РЅРѕ РІР°СЂРёР°РЅС‚ РњРѕРґРµР»СЊ РѕРЅ РЅРµ РІРёРґРёС‚ Р·РЅР°С‡РёС‚ СЂР°Р±РѕС‚Р°РµС‚ ))))
   /// </summary>
   public MainViewModel labelViewModel = new();
 
   /// <summary>
-  /// Уровень доступа сейчас.
+  /// РЈСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР° СЃРµР№С‡Р°СЃ.
   /// </summary>
   private int LevelAccess_now = -1;
 
-  #endregion
+	private string str_Version = string.Empty;
 
-  #region Методы
+	public string Version
+	{
+		get => this.str_Version;
+		set
+		{
+			if (!string.IsNullOrEmpty(value))
+			{
+				this.str_Version = $"РћРћРћ РР Р— РўР•Рљ: {value}";
+				OnPropertyChanged();
+			}
+		}
+	}
 
-  /// <summary>
-  /// Выбор доступного уровня допуска.
-  /// </summary>
-  /// <param name="sender"></param>
-  /// <param name="e"></param>
-  private void ComboBox_AccessLevel_SelectedIndexChanged(object sender, EventArgs e) 
+	#endregion
+
+	#region РњРµС‚РѕРґС‹
+
+	/// <summary>
+	/// Р’С‹Р±РѕСЂ РґРѕСЃС‚СѓРїРЅРѕРіРѕ СѓСЂРѕРІРЅСЏ РґРѕРїСѓСЃРєР°.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private void ComboBox_AccessLevel_SelectedIndexChanged(object sender, EventArgs e) 
 	{
     if (sender is Picker picker)
       Hash_table.SetInt("SelectedLVL.config", picker.SelectedIndex);
   }
 
 	/// <summary>
-	/// Возвращение на страницу с вводом кода.
+	/// Р’РѕР·РІСЂР°С‰РµРЅРёРµ РЅР° СЃС‚СЂР°РЅРёС†Сѓ СЃ РІРІРѕРґРѕРј РєРѕРґР°.
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
@@ -48,7 +63,7 @@ public partial class CodePage : ContentPage
   }
 
   /// <summary>
-  /// Загрузка старницы.
+  /// Р—Р°РіСЂСѓР·РєР° СЃС‚Р°СЂРЅРёС†С‹.
   /// </summary>
   private void LoadPage() 
   {
@@ -60,7 +75,7 @@ public partial class CodePage : ContentPage
   }
 
   /// <summary>
-  /// Обновление кодов(тик таймера).
+  /// РћР±РЅРѕРІР»РµРЅРёРµ РєРѕРґРѕРІ(С‚РёРє С‚Р°Р№РјРµСЂР°).
   /// </summary>
   private void ViewCodePass() 
   {
@@ -81,14 +96,14 @@ public partial class CodePage : ContentPage
     }
     catch (Exception ex)
     {
-      if (!DisplayAlert("Ошибка", $"{ex.Message}\n Продолжить ?", "Yes", "No").Result)
+      if (!DisplayAlert("РћС€РёР±РєР°", $"{ex.Message}\n РџСЂРѕРґРѕР»Р¶РёС‚СЊ ?", "Yes", "No").Result)
         this.timer_minute.Stop();
     }
   }
 
   #endregion
 
-  #region Констуркторы
+  #region РљРѕРЅСЃС‚СѓСЂРєС‚РѕСЂС‹
 
   public CodePage()
 	{

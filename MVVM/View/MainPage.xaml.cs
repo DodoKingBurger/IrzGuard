@@ -2,18 +2,19 @@
 using IrzGuard.Utility;
 using Microsoft.Maui.Controls;
 using System.Net.NetworkInformation;
+using System.Reflection;
 
 namespace IrzGuard
 {
   public partial class MainPage : ContentPage
   {
 
-    /// <summary>
-    /// Событие на ввод текста в текстовое поле. Изменить цвет текста после ввода неправильного пароля.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void EntryBox_code_TextChanged(object sender, EventArgs e) 
+		/// <summary>
+		/// Событие на ввод текста в текстовое поле. Изменить цвет текста после ввода неправильного пароля.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void EntryBox_code_TextChanged(object sender, EventArgs e) 
     {
       if (sender is Entry entry && entry.TextColor!= Colors.Black)
         entry.TextColor = Colors.Black;
@@ -28,7 +29,7 @@ namespace IrzGuard
     {
       try
       {
-        if (int.TryParse(EntryBox_code.Text, out var result))
+        if (int.TryParse(this.EntryBox_code.Text, out var result))
         {
           if (Guard.CheckReferencePass(DateTime.Now, result, out int LevelAccess))
           {
@@ -42,12 +43,12 @@ namespace IrzGuard
           }
           else
           {
-            EntryBox_code.TextColor = Colors.Red;
+            this.EntryBox_code.TextColor = Colors.Red;
           }
         }
         else
         {
-          EntryBox_code.TextColor = Colors.Red;
+					this.EntryBox_code.TextColor = Colors.Red;
           DisplayAlert("Ошибка", "Не удалось преобразовать введенный код в цифры","Okey");
         }
       }
@@ -93,7 +94,7 @@ namespace IrzGuard
 
     public MainPage()
     {
-      InitializeComponent();
+			InitializeComponent();
       LoadPage();
     }
   }

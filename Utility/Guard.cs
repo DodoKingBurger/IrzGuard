@@ -41,46 +41,61 @@ namespace IrzGuard.Utility
       return string.Format("{0:d3}", Pass);
     }
 
-    /// <summary>
-    /// Генератор пароля.
-    /// </summary>
-    /// <param name="LevelAccess">Уровень доступа (0..2)</param>
-    /// <param name="dateTime">Дата и время для генерации</param>
-    /// <returns> Трехзначный пароль если есть такой уровень доступа, иначе 0.</returns>
-    public static int GeneratePass(int LevelAccess, DateTime dateTime)
-    {
-      if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == DateTime.UnixEpoch)
-        return 000;
+		/// <summary>
+		/// Генератор пароля.
+		/// </summary>
+		/// <param name="LevelAccess">Уровень доступа (0..2)</param>
+		/// <param name="dateTime">Дата и время для генерации</param>
+		/// <returns> Трехзначный пароль если есть такой уровень доступа, иначе 0.</returns>
+		public static int GeneratePass(int LevelAccess, DateTime dateTime)
+		{
 
-      int Base = (dateTime.Date.Year % 100 * dateTime.Date.Month * dateTime.Day * dateTime.Hour) % 1000;
-      int Key = (dateTime.Date.Year % 100 + dateTime.Date.Month + dateTime.Day + dateTime.Hour) % 1000;
+			if (LevelAccess < 0)
+				return 0;
+			int Key_XOR = GenerationCode(LevelAccess, dateTime);
+			if (Key_XOR == Pass || Key_XOR == GenerationCode(LevelAccess, dateTime.AddHours(1)) || Key_XOR == GenerationCode(LevelAccess, dateTime.AddHours(-1)))
+				Key_XOR++;
 
-      //Сдвиг по уровню доступа
-      int ditgit1 = (Base / 100 + LevelAccess) % 10;
-      int ditgit2 = (Base / 10 % 10 + LevelAccess) % 10;
-      int ditgit3 = (Base % 10 + LevelAccess) % 10;
+			//XOR с ключом.
+			Pass = Key_XOR;
 
-      int Key_XOR = (ditgit1 * 100 + ditgit2 * 10 + ditgit3 ^ Key) % 1000;
+			return Pass;
+		}
 
-      if (Key_XOR < 100)
-        Key_XOR += 100;
-      if (Key_XOR == Pass)
-        Key_XOR++;
+		/// <summary>
+		/// Генерирует код доступа по алгоритму.
+		/// </summary>
+		/// <param name="LevelAccess">Уровень доступа.</param>
+		/// <param name="dateTime">Дата и время, на какое время был запрос.</param>
+		/// <returns>код доступа.</returns>
+		public static int GenerationCode(int LevelAccess, DateTime dateTime)
+		{
+			if (LevelAccess < 0 || LevelAccess >= 3 || dateTime == DateTime.UnixEpoch)
+				return 000;
 
-      //XOR с ключом.
-      Pass = Key_XOR;
+			int Base = (dateTime.Date.Year % 100 * dateTime.Date.Month * dateTime.Day * dateTime.Hour) % 1000;
+			int Key = (dateTime.Date.Year % 100 + dateTime.Date.Month + dateTime.Day + dateTime.Hour) % 1000;
 
-      return Pass;
-    }
+			//Сдвиг по уровню доступа
+			int ditgit1 = (Base / 100 + LevelAccess) % 10;
+			int ditgit2 = (Base / 10 % 10 + LevelAccess) % 10;
+			int ditgit3 = (Base % 10 + LevelAccess) % 10;
 
-    /// <summary>
-    /// Проверка пароля.
-    /// </summary>
-    /// <param name="dateTime">Время.</param>
-    /// <param name="CheckingPass">Проверяемый пароль.</param>
-    /// <param name="LevelAccess">Уровень доступа полученный.</param>
-    /// <returns>True если пароль прошел проверку, иначе False.</returns>
-    public static bool CheckPass(DateTime dateTime, int CheckingPass, out int LevelAccess)
+			int Key_XOR = (ditgit1 * 100 + ditgit2 * 10 + ditgit3 ^ Key) % 1000;
+
+			if (Key_XOR < 100)
+				Key_XOR += 100;
+			return Key_XOR;
+		}
+
+		/// <summary>
+		/// Проверка пароля.
+		/// </summary>
+		/// <param name="dateTime">Время.</param>
+		/// <param name="CheckingPass">Проверяемый пароль.</param>
+		/// <param name="LevelAccess">Уровень доступа полученный.</param>
+		/// <returns>True если пароль прошел проверку, иначе False.</returns>
+		public static bool CheckPass(DateTime dateTime, int CheckingPass, out int LevelAccess)
     {
       for (int i = 0; i < 3; i++)
       {
