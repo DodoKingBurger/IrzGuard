@@ -53,7 +53,9 @@ namespace IrzGuard.Utility
 			if (LevelAccess < 0)
 				return 0;
 			int Key_XOR = GenerationCode(LevelAccess, dateTime);
-			if (Key_XOR == Pass || Key_XOR == GenerationCode(LevelAccess, dateTime.AddHours(1)) || Key_XOR == GenerationCode(LevelAccess, dateTime.AddHours(-1)))
+      int Key_XOR_Past = GenerationCode(LevelAccess, dateTime.AddHours(-1));
+      int Key_XOR_Future = GenerationCode(LevelAccess, dateTime.AddHours(1));
+			if (Key_XOR == Pass || Key_XOR == Key_XOR_Past || Key_XOR == Key_XOR_Future)
 				Key_XOR++;
 
 			//XOR с ключом.

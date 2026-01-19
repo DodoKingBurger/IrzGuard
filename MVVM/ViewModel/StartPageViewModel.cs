@@ -13,11 +13,9 @@ namespace IrzGuard.MVVM.ViewModel
 	{
 		public event PropertyChangedEventHandler? PropertyChanged;
 
-		private string str_Version = $"ИРЗ ТЕК: {Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
-
 		public string Version
 		{
-			get => this.str_Version;
+			get => $"ИРЗ ТЕК: {Assembly.GetExecutingAssembly().GetName().Version}";
 		}
 
 		#region Методы
