@@ -117,7 +117,7 @@ namespace IrzGuard.Utility
     {
       for (int i = 0; i < 3; i++)
       {
-        int codenow = GenerateReferenceCode(i, dateTime);
+        int codenow = GenerationCode(i, dateTime);
         if (Equals(codenow, CheckingPass))
         {
           LevelAccess = i;
